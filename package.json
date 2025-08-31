@@ -1,11 +1,23 @@
 {
-  "name": "gaurav-logger",
-  "version": "1.0.0",
-  "description": "",
+  "name": "logwizard",
+  "version": "2.0.1",
+  "description": "A lightweight Node.js logging utility with file logging, daily log rotation, console output, and customizable separators.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": [
+    "logger",
+    "logging",
+    "log-rotation",
+    "file-logger",
+    "nodejs",
+    "console-logger",
+    "access-logs",
+    "error-logs",
+    "debug-logger",
+    "custom-logger"
+  ]
 }
