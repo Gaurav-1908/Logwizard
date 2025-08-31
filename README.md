@@ -12,20 +12,21 @@ A simple logging utility for Node.js that logs messages to a specified file and 
 
 ## Installation
 
-To use the Logger class, you can clone this repository or copy the Logger class file into your project.
+To use the Logger class, you can need to install it via npm.
 
 ```bash
-npm install fs path
+npm install logwizard
 ```
 
 ## Usage
 
-Here’s an example of how to use the Logger class:
+Here’s an example of how to use the Logger.:
 
 ```js
-const Logger = require('./path/to/Logger'); // Adjust the path accordingly
+const Logger = require('logwizard'); 
 
-const logger = new Logger('logs/app.log', '|', true); // Log to 'logs/app.log', use '|' as separator, log to console
+// Logs will be stored in "logs/access/YYYY-MM-DD.log"
+const logger = new Logger('logs/access', '|', true, true); // Log to 'logs/app.log', use '|' as separator, log to console
 
 logger.debug('This is a debug message');
 logger.info('This is an info message');
@@ -48,6 +49,10 @@ The `Logger` class constructor accepts the following parameters:
 
 - **`logToConsole`** (Boolean, optional): 
   - Description: If `true`, log messages will also be printed to the console. Defaults to `false`.
+  - Example: `true`.
+
+- **`logRotation `** (Boolean, optional): 
+  - Description: If `true`, logs are rotated daily into files named YYYY-MM-DD.log. If `false` it will create file name as `filePath` parameter. Defaults to `false`.
   - Example: `true`.
 
 ### Method Parameters
@@ -96,88 +101,7 @@ The `Logger` class constructor accepts the following parameters:
 
 - **Description**: Logs a warning message to the file (and optionally to the console).
 - **Parameters**:
-  - **`message`** (String | Array): The message or array of messages to log as a warnconst path = require('path');
-const fs = require('fs');
-
-class Logger {
-  constructor(filePath, separator = '|', logToConsole = false) { 
-    this.filePath = path.join(filePath);
-    this.separator = separator;
-    this.logToConsole = logToConsole;  
-    
-    const dir = path.dirname(this.filePath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-  }
-
-  debug(message) {
-    const logMessage = Array.isArray(message) 
-      ? message.join(` ${this.separator} `)    
-      : message;                       
-    
-    fs.appendFileSync(
-      this.filePath,
-      `${new Date().toISOString()} ${this.separator} ${logMessage}\n`,
-      'utf8'
-    );
-    
-    if (this.logToConsole) {  // Updated this.Console to this.logToConsole
-      console.log(`${new Date().toISOString()} ${this.separator} ${logMessage}\n`);
-    }
-  }
-
-  info(message) {
-    const logMessage = Array.isArray(message) 
-      ? message.join(` ${this.separator} `)    
-      : message;                       
-    
-    fs.appendFileSync(
-      this.filePath,
-      `${new Date().toISOString()} ${this.separator} ${logMessage}\n`,
-      'utf8'
-    );
-    
-    if (this.logToConsole) {  // Updated this.Console to this.logToConsole
-      console.log(`${new Date().toISOString()} ${this.separator} ${logMessage}\n`);
-    }
-  }
-
-  warn(message) {
-    const logMessage = Array.isArray(message) 
-      ? message.join(` ${this.separator} `)    
-      : message;                       
-    
-    fs.appendFileSync(
-      this.filePath,
-      `${new Date().toISOString()} ${this.separator} ${logMessage}\n`,
-      'utf8'
-    );
-    
-    if (this.logToConsole) {  // Updated this.Console to this.logToConsole
-      console.log(`${new Date().toISOString()} ${this.separator} ${logMessage}\n`);
-    }
-  }
-
-  error(message) {
-    const logMessage = Array.isArray(message) 
-      ? message.join(` ${this.separator} `)    
-      : message;                       
-    
-    fs.appendFileSync(
-      this.filePath,
-      `${new Date().toISOString()} ${this.separator} ${logMessage}\n`,
-      'utf8'
-    );
-    
-    if (this.logToConsole) {  // Updated this.Console to this.logToConsole
-      console.log(`${new Date().toISOString()} ${this.separator} ${logMessage}\n`);
-    }
-  }
-}
-
-module.exports = Logger;
-ing entry.
+  - **`message`** (String | Array): The message or array of messages to log as a warning entry.
 - **Example**:
   ```javascript
   logger.warn('This is a warn message');
@@ -197,7 +121,7 @@ ing entry.
 This section can clarify important behaviors and usage notes for the logger.
 
 ```markdown
-- The logger will create the specified log directory if it does not already exist.
+- The logger will create the specified log directory if it does not already exist, but make sure user executing program has permission to create directory. 
 - Log messages can be passed as a string or an array of strings. If an array is provided, the logger will join the elements using the specified separator.
 - The log file will be created if it doesn't exist, and new entries will be appended to the file.
 - The log messages include a timestamp in ISO format, making it easy to track when each log entry was created.
